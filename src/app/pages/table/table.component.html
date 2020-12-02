@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> Exam List</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                Exam Code
+              </th>
+              <th>
+                Exam Name
+              </th>
+              <th>
+                Duration
+              </th>
+              <th>
+                Score
+              </th>
+              <th class="text-right">
+                Take Exam
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let exam of ExamList">
+                <td>{{exam.exam_code}}</td>
+                <td>{{exam.exam_name}}</td>
+                <td>{{exam.duration}}</td>
+                <td>{{exam.score}}</td>
+                <td class="text-right"><button (click)="getExamDetail(exam.id)">Take</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
