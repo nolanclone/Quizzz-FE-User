@@ -5,6 +5,7 @@ import { Record } from "app/model/record";
 import { RecordAnswer } from "app/model/record-answer";
 import { ExamService } from "app/service/exam.service";
 import { RecordService } from "app/service/record.service";
+import { timeStamp } from 'console';
 import { data } from "jquery";
 import { element } from "protractor";
 
@@ -13,109 +14,92 @@ import { element } from "protractor";
   moduleId: module.id,
   templateUrl: "examination.component.html",
 })
-export class IconsComponent implements OnInit {
-  @Input()
-  inId: number;
-  timeLeft;
-  currentExam: any = {
-    id: 0,
-    is_release: true,
-    duration: 0,
-    exam_code: "",
-    exam_name: "",
-    quizSet: [],
-    started_at: null,
-    finished_at: null,
-  };
 
-  userAnswers: FormGroup;
-  answersArray = [];
-  answersArrayMulti = [];
 
-  constructor(
-    private examService: ExamService,
-    private router: Router,
-    private activateRoute: ActivatedRoute,
-    private fb: FormBuilder,
-    private recordService: RecordService
-  ) {}
 
-  ngOnInit() {
-    const id = Number.parseInt(this.activateRoute.snapshot.paramMap.get("id"));
-    this.getExamById(id);
-    if (this.inId > 0)
-      this.examService
-        .getById(this.inId)
-        .subscribe((res) => (this.currentExam = res));
-    this.userAnswers = this.fb.group({});
-  }
+export class IconsComponent implements OnInit{
 
-  getExamById(id) {
-    this.examService.getById(id).subscribe(
-      (data) => {
-        this.currentExam = data;
-        debugger;
-        this.currentExam.started_at = new Date().toUTCString();
-        console.log(data);
-        // this.startTimer(data.duration);
-        // this.timeLeft = this.startTimer(data.duration);
-        this.interval = setInterval(() => {
-          if (data.duration > 0) {
-            data.duration--;
-            this.timeLeft = data.duration;
-            if (this.timeLeft === 0) if (confirm("Time out")) this.submit();
-          }
-        }, 1000);
-      },
-      (error) => {
-        console.log(error);
+
+    @Input()
+    inId: number;
+    timeLeft;    
+    currentExam : any = {
+        id: 0,
+        is_release: true,
+        duration: 15,
+        exam_code: "",
+        exam_name: "",
+        quizSet: []
+    }
+
+    isSubmitted = false;
+
+    userAnswers : FormGroup;
+    answersArray =  [];
+    answersArrayMulti = [];
+
+   
+
+    constructor(private examService: ExamService, private router: Router
+                ,private activateRoute: ActivatedRoute, private fb: FormBuilder ,
+                private recordService: RecordService) {}
+
+
+    ngOnInit() {
+    
+        const id = Number.parseInt(this.activateRoute.snapshot.paramMap.get('id'));
+        this.examService.getById(id).subscribe(data => {    
+            this.currentExam = data;
+            this.answersArray = new Array(this.currentExam.quizSet.length);
+            console.log(data);
+            this.interval = setInterval(() => {
+                if (data.duration > 0) {
+                  data.duration--;
+                  this.timeLeft = data.duration;
+                  if (this.timeLeft === 0) if (confirm("Time out")) this.submit();
+                }
+              }, 1000);
+        });
+        // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
+        this.userAnswers = this.fb.group({})
+        
+    }
+
+    submit() {
+        let examRecord : Record = {
+            exam: {},
+            recordAnswer: []
+        };
+        examRecord.exam.id = this.currentExam.id;
+        this.currentExam.quizSet.forEach(element => {
+            if(element.take_answer != null) examRecord.recordAnswer.push(element.take_answer)
+        });
+        this.recordService.createRecord(examRecord).subscribe(
+            res => {
+                console.log(res);
+                this.isSubmitted = true;
+                this.router.navigateByUrl('/record');
+            },
+            err => {
+                console.log(err);
+                this.isSubmitted = false;
+            }
+        )
+        this.pauseTimer()
+    }
+
+    cancel() {
+        this.router.navigateByUrl('')
+    }
+
+    selectAnswers(answer_id, quiz) {
+        quiz.take_answer = answer_id;
+        console.log(this.currentExam);
+    }
+
+    interval: NodeJS.Timeout;
+
+    pauseTimer() {
+        clearInterval(this.interval);
       }
-    );
-  }
-
-  submit() {
-    let examRecord: Record = {
-      exam: {},
-      recordAnswer: [],
-    };
-    examRecord.exam.id = this.currentExam.id;
-    this.currentExam.quizSet.forEach((element) => {
-      if (element.take_answer != null)
-        examRecord.recordAnswer.push(element.take_answer);
-    });
-    this.recordService.createRecord(examRecord).subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-
-    this.pauseTimer();
-  }
-
-  cancel() {
-    this.router.navigateByUrl("");
-  }
-
-  selectAnswers(answer_id, quiz) {
-    quiz.take_answer = answer_id;
-    console.log(this.currentExam);
-  }
-
-  //   timeLeft: number = this.currentExam.duration;
-  interval: NodeJS.Timeout;
-
-  //   startTimer(timeLeft)  {
-  //     this.interval = setInterval(() => {
-  //       if (timeLeft > 0) {
-  //         timeLeft--;
-  //       }
-  //     }, 1000);
-  //   }
-
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
 }

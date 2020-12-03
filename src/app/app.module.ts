@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { authInterceptorProviders } from './_helper/auth.interceptor';
+import { RecordDetailComponent } from './pages/record-detail/record-detail.component';
 
 enableProdMode();
 
@@ -27,6 +28,7 @@ enableProdMode();
     AdminLayoutComponent,
     LoginComponent,
     RegisterComponent,
+    RecordDetailComponent,
   ],
   imports: [
     BrowserAnimationsModule,

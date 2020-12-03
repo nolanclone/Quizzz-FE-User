@@ -16,4 +16,12 @@ export class RecordService {
   createRecord(data): Observable<any> {
     return this.http.post(baseUrl,data);
   }
+
+  getRecordByUser(): Observable<any> {
+    return this.http.get(baseUrl);
+  }
+
+  getRecordById(id: number): Observable<any> {
+    return this.http.get(`${baseUrl}/${id}`)
+  }
 }
