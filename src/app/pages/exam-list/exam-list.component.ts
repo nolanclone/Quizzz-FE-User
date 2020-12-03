@@ -3,15 +3,9 @@ import { Router } from "@angular/router";
 import { ExamService } from "app/service/exam.service";
 
 @Component({
-<<<<<<< HEAD:src/app/pages/exam-list/exam-list.component.ts
     selector: 'table-cmp',
     moduleId: module.id,
     templateUrl: 'exam-list.component.html'
-=======
-  selector: "table-cmp",
-  moduleId: module.id,
-  templateUrl: "table.component.html",
->>>>>>> origin/nghiavu1:src/app/pages/table/table.component.ts
 })
 export class TableComponent implements OnInit {
 
