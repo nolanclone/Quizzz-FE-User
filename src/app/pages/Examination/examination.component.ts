@@ -11,7 +11,7 @@ import { element } from 'protractor';
 @Component({
     selector: 'icons-cmp',
     moduleId: module.id,
-    templateUrl: 'icons.component.html'
+    templateUrl: 'examination.component.html'
 })
 
 

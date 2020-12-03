@@ -8,7 +8,7 @@ import { ExamService } from 'app/service/exam.service';
 @Component({
     selector: 'table-cmp',
     moduleId: module.id,
-    templateUrl: 'table.component.html'
+    templateUrl: 'exam-list.component.html'
 })
 
 export class TableComponent implements OnInit{
