@@ -26,7 +26,7 @@
                 <td>{{record.exam.exam_code}}</td>
                 <td>{{record.exam.exam_name}}</td>
                 <td>{{record.score}}</td>
-                <td class="text-right"><button>Detail</button></td>
+                <td class="text-right"><button (click)="getRecordDetail(record.id)">Detail</button></td>
               </tr>
             </tbody>
           </table>

@@ -1,3 +1,4 @@
+<p>Time left: {{timeLeft}} s</p>
 <div class="row">
   <div class="col-md-12">
     <div class="card demo-icons">
@@ -8,12 +9,8 @@
             <div>
               <h5>Question {{ i + 1 }}: {{ quiz.content }}</h5>
               <section *ngFor="let answer of quiz.answers">
-                <input
-                  type="radio"
-                  name="{{quiz.id}}"
-                  value="{{answer.id}}"
-                  (change)= "selectAnswers(answer.id, quiz)"   
-                />{{ answer.content }}
+                <input type="radio" name="{{quiz.id}}" value="{{answer.id}}"
+                  (change)="selectAnswers(answer.id, quiz)" />{{ answer.content }}
               </section>
             </div>
           </ng-container>
@@ -21,10 +18,7 @@
           <ng-container *ngIf="quiz.type == 2">
             <div>
               <h5>Question {{ i + 1 }}: {{ quiz.content }}</h5>
-              <section
-                class="answer-section"
-                *ngFor="let answer of quiz.answers"
-              >
+              <section class="answer-section" *ngFor="let answer of quiz.answers">
                 <input type="checkbox" name="{{ answer.id }}" />{{
                   answer.content
                 }}
