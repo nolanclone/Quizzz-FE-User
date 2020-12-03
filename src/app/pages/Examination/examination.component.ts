@@ -9,9 +9,9 @@ import { data } from "jquery";
 import { element } from "protractor";
 
 @Component({
-selector: 'icons-cmp',
-moduleId: module.id,
-templateUrl: 'examination.component.html'
+  selector: "icons-cmp",
+  moduleId: module.id,
+  templateUrl: "examination.component.html",
 })
 export class IconsComponent implements OnInit {
   @Input()
@@ -24,6 +24,8 @@ export class IconsComponent implements OnInit {
     exam_code: "",
     exam_name: "",
     quizSet: [],
+    started_at: null,
+    finished_at: null,
   };
 
   userAnswers: FormGroup;
@@ -52,6 +54,8 @@ export class IconsComponent implements OnInit {
     this.examService.getById(id).subscribe(
       (data) => {
         this.currentExam = data;
+        debugger;
+        this.currentExam.started_at = new Date().toUTCString();
         console.log(data);
         // this.startTimer(data.duration);
         // this.timeLeft = this.startTimer(data.duration);
@@ -87,10 +91,12 @@ export class IconsComponent implements OnInit {
         console.log(err);
       }
     );
+
+    this.pauseTimer();
   }
 
   cancel() {
-    this.router.navigateByUrl('')
+    this.router.navigateByUrl("");
   }
 
   selectAnswers(answer_id, quiz) {
