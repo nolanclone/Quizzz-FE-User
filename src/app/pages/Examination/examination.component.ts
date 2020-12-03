@@ -30,7 +30,7 @@ export class IconsComponent implements OnInit{
         quizSet: []
     }
 
-    
+    isSubmitted = false;
 
     userAnswers : FormGroup;
     answersArray =  [];
@@ -68,9 +68,12 @@ export class IconsComponent implements OnInit{
         this.recordService.createRecord(examRecord).subscribe(
             res => {
                 console.log(res);
+                this.isSubmitted = true;
+                this.router.navigateByUrl('/record');
             },
             err => {
                 console.log(err);
+                this.isSubmitted = false;
             }
         )
     }
