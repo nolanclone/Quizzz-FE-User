@@ -32,6 +32,7 @@
         </div>
       </form>
       <div class="alert alert-success" *ngIf="isSubmitted"> Exam is submitted successfully</div>
+      <div class="alert alert-warning" *ngIf="!isChecked">{{errorMessage}}</div>
     </div>
   </div>
 </div>

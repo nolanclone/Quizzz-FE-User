@@ -31,6 +31,8 @@ export class IconsComponent implements OnInit{
         quizSet: []
     }
 
+    errorMessage = '';
+    isChecked = false;
     isSubmitted = false;
 
     userAnswers : FormGroup;
@@ -71,19 +73,27 @@ export class IconsComponent implements OnInit{
         };
         examRecord.exam.id = this.currentExam.id;
         this.currentExam.quizSet.forEach(element => {
-            if(element.take_answer != null) examRecord.recordAnswer.push(element.take_answer)
-        });
-        this.recordService.createRecord(examRecord).subscribe(
-            res => {
-                console.log(res);
-                this.isSubmitted = true;
-                this.router.navigateByUrl('/record');
-            },
-            err => {
-                console.log(err);
-                this.isSubmitted = false;
+            if(element.take_answer != null) {
+                examRecord.recordAnswer.push(element.take_answer);
+                this.isChecked = true;    
             }
-        )
+        });
+        if(this.isChecked) {
+            this.recordService.createRecord(examRecord).subscribe(
+                res => {
+                    console.log(res);
+                    this.isSubmitted = true;
+                    this.router.navigateByUrl('/record');
+                },
+                err => {
+                    console.log(err);
+                    this.isSubmitted = false;
+                }
+            )
+        } else {
+            this.errorMessage = "Please check all question's answer to finish exam";
+        }
+        
     }
 
     cancel() {
