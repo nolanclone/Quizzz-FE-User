@@ -44,12 +44,14 @@ export class IconsComponent implements OnInit{
 
 
     ngOnInit() {
+    
         const id = Number.parseInt(this.activateRoute.snapshot.paramMap.get('id'));
-        this.examService.getById(id).subscribe(data => {
+        this.examService.getById(id).subscribe(data => {    
             this.currentExam = data;
             this.answersArray = new Array(this.currentExam.quizSet.length);
+            console.log(data);
         });
-        if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
+        // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
         this.userAnswers = this.fb.group({})
         
     }
@@ -73,7 +75,9 @@ export class IconsComponent implements OnInit{
         )
     }
 
-    cancel() {}
+    cancel() {
+        this.router.navigateByUrl('')
+    }
 
     selectAnswers(answer_id, quiz) {
         quiz.take_answer = answer_id;

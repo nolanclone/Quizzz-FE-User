@@ -17,7 +17,7 @@ import {enableProdMode} from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
-
+import { authInterceptorProviders } from './_helper/auth.interceptor';
 
 enableProdMode();
 
@@ -43,7 +43,7 @@ enableProdMode();
     ReactiveFormsModule,
   
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

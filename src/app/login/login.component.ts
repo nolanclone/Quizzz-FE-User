@@ -24,25 +24,25 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
       if(this.roles.includes('ROLE_USER')) {
-        this.router.navigateByUrl('/home')
+        this.router.navigateByUrl('/exam-list')
       }
     }
   }
 
   onSubmit(): void {
-    this.router.navigateByUrl('/home')
     this.authService.login(this.form).subscribe(
       data => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
-
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        if(this.roles.includes('ROLE_USER')) {
-          this.router.navigateByUrl('/home')
+        if(this.roles.includes('ROLE_USER')){
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          this.router.navigateByUrl('/exam-list')
         }else {
-          this.router.navigateByUrl('')
+          this.isLoginFailed = true;
+          this.errorMessage = 'Unauthorized login';
+           this.tokenStorage.signOut();
         }
       },
       err => {
