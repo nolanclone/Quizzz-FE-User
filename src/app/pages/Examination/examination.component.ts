@@ -1,18 +1,11 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit , ViewChild} from "@angular/core";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Record } from "app/model/record";
 import { RecordAnswer } from "app/model/record-answer";
 import { ExamService } from "app/service/exam.service";
 import { RecordService } from "app/service/record.service";
-<<<<<<< HEAD
-import { timeStamp } from 'console';
-import { data } from "jquery";
-import { element } from "protractor";
-=======
-import { timer, Subscription } from "rxjs";
-import { Pipe, PipeTransform } from "@angular/core";
->>>>>>> record-detail
+
 
 @Component({
   selector: "icons-cmp",
@@ -24,6 +17,8 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 export class IconsComponent implements OnInit{
 
+    
+   
 
     @Input()
     inId: number;   
@@ -36,6 +31,8 @@ export class IconsComponent implements OnInit{
         quizSet: []
     }
 
+   
+
     errorMessage = '';
     isChecked = false;
     isSubmitted = false;
@@ -44,8 +41,7 @@ export class IconsComponent implements OnInit{
     answersArray =  [];
     answersArrayMulti = [];
 
-    countDown: Subscription;
-    tick = 1000;
+    
 
     constructor(private examService: ExamService, private router: Router
                 ,private activateRoute: ActivatedRoute, private fb: FormBuilder ,
@@ -58,15 +54,12 @@ export class IconsComponent implements OnInit{
         this.examService.getById(id).subscribe(data => {    
             this.currentExam = data;
             this.answersArray = new Array(this.currentExam.quizSet.length);
-            this.countDown = timer(0, this.tick).subscribe(() => --data.duration * 60);
-            console.log(data);
-            
-            
-            
+            console.log(data);    
         });
 
         // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
         this.userAnswers = this.fb.group({})
+        
         
     }
 
@@ -81,10 +74,6 @@ export class IconsComponent implements OnInit{
                 examRecord.recordAnswer.push(element.take_answer);
                 this.isChecked = true;    
             }
-<<<<<<< HEAD
-        )
-        this.pauseTimer()
-=======
         });
         if(this.isChecked) {
             this.recordService.createRecord(examRecord).subscribe(
@@ -102,7 +91,6 @@ export class IconsComponent implements OnInit{
             this.errorMessage = "Please check all question's answer to finish exam";
         }
         
->>>>>>> record-detail
     }
 
     cancel() {
@@ -119,18 +107,9 @@ export class IconsComponent implements OnInit{
     // pauseTimer() {
     //     clearInterval(this.interval);
     //   }
+
+   
 }
 
-@Pipe({
-    name: "formatTime"
-  })
-  export class FormatTimePipe implements PipeTransform {
-    transform(value: number): string {
-      const minutes: number = Math.floor(value / 60);
-      return (
-        ("00" + minutes).slice(-2) +
-        ":" +
-        ("00" + Math.floor(value - minutes * 60)).slice(-2)
-      );
-    }
-  }
+  
+    

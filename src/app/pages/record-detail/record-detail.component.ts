@@ -1,17 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecordService } from 'app/service/record.service';
-import { data } from 'jquery';
+ 
 
-export interface Record {
-
-    exam: {
-      quizSet:[]
-    },
-    recordAnswer: []
-  }
-
-
+ 
 @Component({
   selector: 'app-record-detail',
   templateUrl: './record-detail.component.html',
@@ -19,7 +11,12 @@ export interface Record {
 })
 export class RecordDetailComponent implements OnInit {
 
-  currentRecord : Record;
+  currentRecord : any = {
+    exam: {
+      quizSet:[]
+    },  
+    recordAnswer: []
+  };
 
   constructor(private recordService: RecordService, private activatedRoute: ActivatedRoute) {
     
