@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   confirmPassword : string;
   isSuccessful = false;
   isSignUpFailed = false;
+  isMatched = false;
   errorMessage = '';
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -22,18 +23,24 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.register(this.form).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-        this.router.navigateByUrl('/login');
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-      }
-    )
+    if(this.form.password == this.confirmPassword) {
+      this.isMatched = true;
+      this.authService.register(this.form).subscribe(
+        data => {
+          console.log(data);
+          this.isSuccessful = true;
+          this.isSignUpFailed = false;
+          this.router.navigateByUrl('/login');
+        },
+        err => {
+          this.errorMessage = err.error.message;
+          this.isSignUpFailed = true;
+        }
+      )
+    }else {
+      this.errorMessage = "password does not match!";
+    }
+    
   }
 
 }

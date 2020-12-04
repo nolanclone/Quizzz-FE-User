@@ -8,16 +8,16 @@
         <div class="table-responsive">
           <table class="table">
             <thead class=" text-primary">
-              <th>
+              <th style="text-align: center;">
                 Exam Code
               </th>
-              <th>
+              <th style="text-align: center;">
                 Exam Name
               </th>
-              <th>
+              <th style="text-align: center;">
                 Duration
               </th>
-              <th>
+              <th style="text-align: center;">
                 Score
               </th>
               <th class="text-right">
@@ -26,11 +26,11 @@
             </thead>
             <tbody>
               <tr *ngFor="let exam of ExamList">
-                <td>{{exam.exam_code}}</td>
-                <td>{{exam.exam_name}}</td>
-                <td>{{exam.duration}}</td>
-                <td>{{exam.score}}</td>
-                <td class="text-right"><button (click)="getExamDetail(exam.id)">Take</button></td>
+                <td style="text-align: center;">{{exam.exam_code}}</td>
+                <td style="text-align: center;">{{exam.exam_name}}</td>
+                <td style="text-align: center;">{{exam.duration}}</td>
+                <td style="text-align: center;">{{exam.score}}</td>
+                <td class="text-right"><button class="btn" style="background-color: #ef8157;" (click)="getExamDetail(exam.id)">Take</button></td>
               </tr>
             </tbody>
           </table>

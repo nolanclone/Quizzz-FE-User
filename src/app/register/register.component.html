@@ -1,5 +1,9 @@
-<div class="col-md-12">
+<div class="container">
+  <div class="col-md-12">
     <div class="card card-container">
+      <h4 id="logo">Quizzz!!!</h4>
+      <p id="subtitle">The best online quiz platform!<p>
+      <h2>Register</h2>
       <form *ngIf="!isSuccessful" name="form"
         (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group">
@@ -52,19 +56,17 @@
             />
             <div class="alert-danger" *ngIf="confirm_password.invalid">
               <div *ngIf="confirm_password.dirty && confirm_password.errors && confirm_password.errors.required">Password is required</div>
-              <div *ngIf="confirm_password.dirty && ((password.errors && password.errors.compare) || (confirm_password.errors || confirm_password.errors.compare)) && !confirm_password.errors.required">
-                Password doesn't match!
-              </div>
             </div>
           </div>
           <p>Already had an account?<a [routerLink]="['']">Login</a></p>
         <div class="form-group">
-          <button class="btn btn-primary btn-block" [disabled]="!f.form.valid">Sign Up</button>
+          <button class="btn" [disabled]="!f.form.valid">Sign Up</button>
         </div>
   
-        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed || f.submitted && !isMatched">
           Signup failed!<br />{{ errorMessage }}
         </div>
+        
       </form>
   
       <div class="alert alert-success" *ngIf="isSuccessful">
@@ -72,4 +74,6 @@
       </div>
     </div>
   </div>
+
+</div>
 

@@ -4,10 +4,13 @@ import { RecordService } from 'app/service/record.service';
 import { data } from 'jquery';
 
 export interface Record {
-  recordAnswer: {
-    
+
+    exam: {
+      quizSet:[]
+    },
+    recordAnswer: []
   }
-}
+
 
 @Component({
   selector: 'app-record-detail',
@@ -16,7 +19,7 @@ export interface Record {
 })
 export class RecordDetailComponent implements OnInit {
 
-
+  currentRecord : Record;
 
   constructor(private recordService: RecordService, private activatedRoute: ActivatedRoute) {
     
@@ -24,9 +27,15 @@ export class RecordDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number.parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
-    // this.recordService.getRecordById(id).subscribe(
-    //   data => {}
-    // )
+    this.recordService.getRecordById(id).subscribe(
+      data => {
+        this.currentRecord = data;
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      }
+    )
 
   }
 
