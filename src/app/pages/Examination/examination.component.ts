@@ -6,7 +6,6 @@ import { RecordAnswer } from "app/model/record-answer";
 import { ExamService } from "app/service/exam.service";
 import { RecordService } from "app/service/record.service";
 
-
 @Component({
   selector: "icons-cmp",
   moduleId: module.id,
@@ -21,7 +20,7 @@ export class IconsComponent implements OnInit{
    
 
     @Input()
-    inId: number;   
+    inId: number;
     currentExam : any = {
         id: 0,
         is_release: true,
@@ -49,9 +48,9 @@ export class IconsComponent implements OnInit{
 
 
     ngOnInit() {
-    
+
         const id = Number.parseInt(this.activateRoute.snapshot.paramMap.get('id'));
-        this.examService.getById(id).subscribe(data => {    
+        this.examService.getById(id).subscribe(data => {
             this.currentExam = data;
             this.answersArray = new Array(this.currentExam.quizSet.length);
             console.log(data);    
@@ -72,7 +71,7 @@ export class IconsComponent implements OnInit{
         this.currentExam.quizSet.forEach(element => {
             if(element.take_answer != null) {
                 examRecord.recordAnswer.push(element.take_answer);
-                this.isChecked = true;    
+                this.isChecked = true;
             }
         });
         if(this.isChecked) {
