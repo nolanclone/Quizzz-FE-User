@@ -5,14 +5,11 @@ import { Record } from "app/model/record";
 import { RecordAnswer } from "app/model/record-answer";
 import { ExamService } from "app/service/exam.service";
 import { RecordService } from "app/service/record.service";
-<<<<<<< HEAD
 import { timeStamp } from 'console';
 import { data } from "jquery";
 import { element } from "protractor";
-=======
 import { timer, Subscription } from "rxjs";
 import { Pipe, PipeTransform } from "@angular/core";
->>>>>>> record-detail
 
 @Component({
   selector: "icons-cmp",
@@ -26,7 +23,7 @@ export class IconsComponent implements OnInit{
 
 
     @Input()
-    inId: number;   
+    inId: number;
     currentExam : any = {
         id: 0,
         is_release: true,
@@ -53,21 +50,21 @@ export class IconsComponent implements OnInit{
 
 
     ngOnInit() {
-    
+
         const id = Number.parseInt(this.activateRoute.snapshot.paramMap.get('id'));
-        this.examService.getById(id).subscribe(data => {    
+        this.examService.getById(id).subscribe(data => {
             this.currentExam = data;
             this.answersArray = new Array(this.currentExam.quizSet.length);
             this.countDown = timer(0, this.tick).subscribe(() => --data.duration * 60);
             console.log(data);
-            
-            
-            
+
+
+
         });
 
         // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
         this.userAnswers = this.fb.group({})
-        
+
     }
 
     submit() {
@@ -79,12 +76,8 @@ export class IconsComponent implements OnInit{
         this.currentExam.quizSet.forEach(element => {
             if(element.take_answer != null) {
                 examRecord.recordAnswer.push(element.take_answer);
-                this.isChecked = true;    
+                this.isChecked = true;
             }
-<<<<<<< HEAD
-        )
-        this.pauseTimer()
-=======
         });
         if(this.isChecked) {
             this.recordService.createRecord(examRecord).subscribe(
@@ -101,8 +94,7 @@ export class IconsComponent implements OnInit{
         } else {
             this.errorMessage = "Please check all question's answer to finish exam";
         }
-        
->>>>>>> record-detail
+
     }
 
     cancel() {

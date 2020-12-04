@@ -25,7 +25,7 @@
               <tr *ngFor="let record of recordList">
                 <td>{{record.exam.exam_code}}</td>
                 <td>{{record.exam.exam_name}}</td>
-                <td>{{record.score}} / {{record.exam.score}}</td>
+                <td>{{record.score}}</td>
                 <td class="text-right"><button (click)="getRecordDetail(record.id)">Detail</button></td>
               </tr>
             </tbody>
