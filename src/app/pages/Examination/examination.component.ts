@@ -5,8 +5,8 @@ import { Record } from "app/model/record";
 import { RecordAnswer } from "app/model/record-answer";
 import { ExamService } from "app/service/exam.service";
 import { RecordService } from "app/service/record.service";
-import { data } from "jquery";
-import { element } from "protractor";
+import { timer, Subscription } from "rxjs";
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Component({
 selector: 'icons-cmp',
@@ -20,8 +20,7 @@ export class IconsComponent implements OnInit{
 
 
     @Input()
-    inId: number;
-    timeLeft;    
+    inId: number;   
     currentExam : any = {
         id: 0,
         is_release: true,
@@ -39,7 +38,8 @@ export class IconsComponent implements OnInit{
     answersArray =  [];
     answersArrayMulti = [];
 
-   
+    countDown: Subscription;
+    tick = 1000;
 
     constructor(private examService: ExamService, private router: Router
                 ,private activateRoute: ActivatedRoute, private fb: FormBuilder ,
@@ -52,15 +52,13 @@ export class IconsComponent implements OnInit{
         this.examService.getById(id).subscribe(data => {    
             this.currentExam = data;
             this.answersArray = new Array(this.currentExam.quizSet.length);
+            this.countDown = timer(0, this.tick).subscribe(() => --data.duration * 60);
             console.log(data);
-            this.interval = setInterval(() => {
-                if (data.duration > 0) {
-                  data.duration--;
-                  this.timeLeft = data.duration;
-                  if (this.timeLeft === 0) if (confirm("Time out")) this.submit();
-                }
-              }, 1000);
+            
+            
+            
         });
+
         // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
         this.userAnswers = this.fb.group({})
         
@@ -105,9 +103,23 @@ export class IconsComponent implements OnInit{
         console.log(this.currentExam);
     }
 
-    interval: NodeJS.Timeout;
+    // interval: NodeJS.Timeout;
 
-    pauseTimer() {
-        clearInterval(this.interval);
-      }
+    // pauseTimer() {
+    //     clearInterval(this.interval);
+    //   }
 }
+
+@Pipe({
+    name: "formatTime"
+  })
+  export class FormatTimePipe implements PipeTransform {
+    transform(value: number): string {
+      const minutes: number = Math.floor(value / 60);
+      return (
+        ("00" + minutes).slice(-2) +
+        ":" +
+        ("00" + Math.floor(value - minutes * 60)).slice(-2)
+      );
+    }
+  }
