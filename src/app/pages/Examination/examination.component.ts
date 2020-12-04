@@ -39,6 +39,9 @@ export class IconsComponent implements OnInit{
     userAnswers : FormGroup;
     answersArray =  [];
     answersArrayMulti = [];
+    counter: number = 0;
+    timeLeft: number;
+    interval;
 
     
 
@@ -53,7 +56,13 @@ export class IconsComponent implements OnInit{
         this.examService.getById(id).subscribe(data => {
             this.currentExam = data;
             this.answersArray = new Array(this.currentExam.quizSet.length);
-            console.log(data);    
+            console.log(data);
+            this.timeLeft = data.duration * 60;
+            this.startTimer();
+            if(this.counter == this.timeLeft) {
+                this.submit();
+                clearInterval(this.interval);
+            }    
         });
 
         // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
@@ -79,6 +88,7 @@ export class IconsComponent implements OnInit{
                 res => {
                     console.log(res);
                     this.isSubmitted = true;
+                    clearInterval(this.interval);
                     this.router.navigateByUrl('/record');
                 },
                 err => {
@@ -106,6 +116,23 @@ export class IconsComponent implements OnInit{
     // pauseTimer() {
     //     clearInterval(this.interval);
     //   }
+
+    startTimer() {
+        this.interval = setInterval(() => {
+            this.counter++;
+            this.convertSeconds(this.timeLeft - this.counter);
+        }, 1000)
+    }
+
+
+    convertSeconds(s) {
+        let min = Math.floor(s / 60);
+        let sec = s % 60;
+        return min + ':' + sec;
+    }
+
+   
+    
 
    
 }
