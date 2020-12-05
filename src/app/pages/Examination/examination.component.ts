@@ -103,7 +103,9 @@ export class IconsComponent implements OnInit{
     }
 
     cancel() {
-        this.router.navigateByUrl('')
+        clearInterval(this.interval);
+        this.router.navigateByUrl('');
+        
     }
 
     selectAnswers(answer_id, quiz) {
