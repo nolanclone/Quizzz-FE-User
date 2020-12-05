@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from "ngx-toastr";
 
@@ -20,7 +20,10 @@ import { RegisterComponent } from './register/register.component';
 import { authInterceptorProviders } from './_helper/auth.interceptor';
 import { RecordDetailComponent } from './pages/record-detail/record-detail.component';
 
+
 enableProdMode();
+
+
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ enableProdMode();
     LoginComponent,
     RegisterComponent,
     RecordDetailComponent,
+    
+    
   ],
   imports: [
     BrowserAnimationsModule,
@@ -44,6 +49,9 @@ enableProdMode();
     FormsModule,
     ReactiveFormsModule,
   
+  ],
+  schemas: [
+    NO_ERRORS_SCHEMA
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
