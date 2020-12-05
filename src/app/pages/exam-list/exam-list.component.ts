@@ -9,7 +9,6 @@ import { ExamService } from "app/service/exam.service";
 })
 export class TableComponent implements OnInit {
 
-
   constructor(private router: Router, private service: ExamService) {}
 
   public ExamList: any = [];

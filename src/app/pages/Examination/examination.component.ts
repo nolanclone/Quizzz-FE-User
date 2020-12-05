@@ -1,3 +1,4 @@
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component, Input, OnInit , ViewChild} from "@angular/core";
 import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -16,9 +17,6 @@ import { RecordService } from "app/service/record.service";
 
 export class IconsComponent implements OnInit{
 
-    
-   
-
     @Input()
     inId: number;
     currentExam : any = {
@@ -27,10 +25,11 @@ export class IconsComponent implements OnInit{
         duration: 15,
         exam_code: "",
         exam_name: "",
-        quizSet: []
+        quizSet: [],
+        started_at: Date
     }
 
-   
+
 
     errorMessage = '';
     isChecked = false;
@@ -43,15 +42,19 @@ export class IconsComponent implements OnInit{
     timeLeft: number;
     interval;
 
-    
+    examRecord : Record = {
+      start_at:{},
+      exam: {},
+      recordAnswer: []
+  };
 
     constructor(private examService: ExamService, private router: Router
                 ,private activateRoute: ActivatedRoute, private fb: FormBuilder ,
-                private recordService: RecordService) {}
+                private recordService: RecordService) {
+                }
 
 
     ngOnInit() {
-
         const id = Number.parseInt(this.activateRoute.snapshot.paramMap.get('id'));
         this.examService.getById(id).subscribe(data => {
             this.currentExam = data;
@@ -62,30 +65,29 @@ export class IconsComponent implements OnInit{
             if(this.counter == this.timeLeft) {
                 this.submit();
                 clearInterval(this.interval);
-            }    
+            }
         });
 
         // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
         this.userAnswers = this.fb.group({})
-        
-        
+
+
     }
 
     submit() {
-        let examRecord : Record = {
-            exam: {},
-            recordAnswer: []
-        };
-        examRecord.exam.id = this.currentExam.id;
+      debugger
+        this.examRecord.start_at = this.currentExam.started_at;
+        this.examRecord.exam.id = this.currentExam.id;
         this.currentExam.quizSet.forEach(element => {
             if(element.take_answer != null) {
-                examRecord.recordAnswer.push(element.take_answer);
+                this.examRecord.recordAnswer.push(element.take_answer);
                 this.isChecked = true;
             }
         });
         if(this.isChecked) {
-            this.recordService.createRecord(examRecord).subscribe(
+            this.recordService.createRecord(this.examRecord).subscribe(
                 res => {
+
                     console.log(res);
                     this.isSubmitted = true;
                     clearInterval(this.interval);
@@ -99,7 +101,7 @@ export class IconsComponent implements OnInit{
         } else {
             this.errorMessage = "Please check all question's answer to finish exam";
         }
-        
+
     }
 
     cancel() {
@@ -131,11 +133,11 @@ export class IconsComponent implements OnInit{
         return min + ':' + sec;
     }
 
-   
-    
 
-   
+
+
+
 }
 
-  
-    
+
+
