@@ -1,0 +1,39 @@
+h4 {
+    text-align: center;
+    font-weight: 600;
+    margin: 0;
+    padding: 20px;
+    color: #9a9a9a;
+}
+
+.header {
+    border-bottom: 2px solid #9a9a9a;
+}
+
+.form {
+    margin: auto;
+   padding: 0;
+}
+
+span {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #9a9a9a;
+}
+
+.user-answer {
+    font-weight: bold;
+}
+
+.correct-answer {
+    color: green;
+}
+
+
+

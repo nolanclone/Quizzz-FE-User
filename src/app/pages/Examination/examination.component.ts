@@ -5,11 +5,13 @@ import { Record } from "app/model/record";
 import { RecordAnswer } from "app/model/record-answer";
 import { ExamService } from "app/service/exam.service";
 import { RecordService } from "app/service/record.service";
+import { element } from 'protractor';
 
 @Component({
   selector: "icons-cmp",
   moduleId: module.id,
   templateUrl: "examination.component.html",
+  styleUrls: ['./examination.component.css']
 })
 
 
@@ -99,6 +101,27 @@ export class IconsComponent implements OnInit{
         } else {
             this.errorMessage = "Please check all question's answer to finish exam";
         }
+
+        // this.currentExam.quizSet.forEach(element => {
+        //     examRecord.recordAnswer.push(element.take_answer);
+        // });
+        
+        // this.recordService.createRecord(examRecord).subscribe(
+        //     res => {
+        //         console.log(res);
+        //         this.isSubmitted = true;
+        //         clearInterval(this.interval);
+        //         if(this.isSubmitted) {
+        //             setTimeout(()=> {
+        //               this.router.navigateByUrl("/record");
+        //             }, 3000);
+        //           }
+        //     },
+        //     err => {
+        //         console.log(err);
+        //         this.isSubmitted = false;
+        //     }
+        // )
         
     }
 

@@ -1,16 +1,20 @@
-{{convertSeconds(timeLeft - counter)}}
-<div class="row">
-  <div class="col-md-12">
+<div class="timer"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+</svg>   {{convertSeconds(timeLeft - counter)}}</div>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6">
     <div class="card demo-icons">
       <h4 class="header">Exam {{ currentExam.exam_name }}</h4>
       <form>
         <div *ngFor="let quiz of currentExam.quizSet; let i = index">
           <ng-container *ngIf="quiz.type == 1">
-            <div>
+            <div class="question-list">
               <h5>Question {{ i + 1 }}: {{ quiz.content }}</h5>
               <section *ngFor="let answer of quiz.answers">
-                <input type="radio" name="{{quiz.id}}" value="{{answer.id}}"
-                  (change)="selectAnswers(answer.id, quiz)" />{{ answer.content }}
+                <input type="radio" name="{{quiz.id}}" value="{{answer.id}}" class="radio-input" id="answer"
+                  (change)="selectAnswers(answer.id, quiz)" />   {{ answer.content }}
+              
               </section>
             </div>
           </ng-container>
@@ -27,12 +31,12 @@
           </ng-container>
         </div>
         <div>
-          <button type="button" (click)='submit()'>Submit</button>
-          <button (click)="cancel()">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)='submit()'>Submit</button>
+          <button class="btn btn-warning" (click)="cancel()">Cancel</button>
         </div>
       </form>
       <div class="alert alert-success" *ngIf="isSubmitted"> Exam is submitted successfully</div>
-      <div class="alert alert-warning" *ngIf="!isChecked">{{errorMessage}}</div>
+      <!-- <div class="alert alert-warning" *ngIf="!isChecked">{{errorMessage}}</div> -->
     </div>
   </div>
 </div>
