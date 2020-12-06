@@ -1,7 +1,7 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="card demo-icons">
-        <h4 class="header">Record Detail</h4>
+        <h4 class="header">Exam Detail</h4>
         <form>
           <div *ngFor="let quiz of currentRecord.exam.quizSet; let i = index">
             <ng-container *ngIf="quiz.type == 1">
@@ -11,14 +11,22 @@
                         <p *ngIf="answer._correct">Correct answer is: {{answer.content}}</p>
                 </section>
               </div>
-              <div *ngFor="let userAnswer of currentRecord.recordAnswer">
-                <p>Your answer: {{userAnswer.record_answer_id}}</p>
-            </div>
             </ng-container>
-            
           </div>
+          
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card demo-icons">
+        <h4 class="header">User answer detail</h4>
+        <form>
           <div>
-            
+            <section *ngFor="let userAnswer of currentRecord.recordAnswers">
+              <h5>Your answer is:</h5>
+              <p>{{userAnswer.content}}</p>
+            </section>
           </div>
         </form>
       </div>
