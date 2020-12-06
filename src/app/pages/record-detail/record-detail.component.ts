@@ -26,7 +26,6 @@ export class RecordDetailComponent implements OnInit {
     const id = Number.parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
     this.recordService.getRecordById(id).subscribe(
       data => {
-        debugger
         this.currentRecord = data;
         console.log(data);
       },

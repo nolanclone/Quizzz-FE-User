@@ -3,7 +3,7 @@
     <div class="card card-container">
       <h4 id="logo">Quizzz!!!</h4>
       <p id="subtitle">The best online quiz platform!<p>
-      <h2>Register</h2>
+      <h5>Register</h5>
       <form *ngIf="!isSuccessful" name="form"
         (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group">
@@ -31,8 +31,6 @@
             [(ngModel)]="form.password"
             minlength="6"
             #password="ngModel"
-            compare-password="confirm_password"
-            parent="true"
             required
           />
           <div class="alert-danger" *ngIf="f.submitted && password.invalid">
@@ -50,28 +48,32 @@
               name="confirm_password"
               [(ngModel)]="confirmPassword"
               #confirm_password="ngModel"
-              compare-password="password"
-              parent="true"
               required
             />
-            <div class="alert-danger" *ngIf="confirm_password.invalid">
-              <div *ngIf="confirm_password.dirty && confirm_password.errors && confirm_password.errors.required">Password is required</div>
+            <div class="alert-danger" *ngIf="f.submitted && confirm_password.invalid">
+              <div *ngIf="confirm_password.errors.required">Confirm password is required</div>
+            </div>
+            <div class="alert-danger" *ngIf="f.submitted && !isMatched">
+              Confirm password is not match
             </div>
           </div>
           <p>Already had an account?<a [routerLink]="['']">Login</a></p>
         <div class="form-group">
           <button class="btn" [disabled]="!f.form.valid">Sign Up</button>
         </div>
-  
-        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed || f.submitted && !isMatched">
-          Signup failed!<br />{{ errorMessage }}
-        </div>
+        <ng-template #elseBlock *ngIf="f.submitted && isSignUpFailed ">
+          <div class="alert alert-warning" >
+            Your registration is failed!<br />{{ errorMessage }}
+          </div>
+        </ng-template>
+        <ng-template *ngIf="f.submitted && isSuccessful; else elseBlock">
+          <div class="alert alert-success" >
+            Your registration is successful!
+          </div>
+        </ng-template>
+        
         
       </form>
-  
-      <div class="alert alert-success" *ngIf="isSuccessful">
-        Your registration is successful!
-      </div>
     </div>
   </div>
 

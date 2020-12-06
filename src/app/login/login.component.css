@@ -14,12 +14,16 @@
  #subtitle {
      margin-left: 20px;
      margin-top: 0;
+     font-size: 16px;
+     font-weight: 600;
  }
 
-h2 {
+h5 {
+    font-size: 18px;
     font-weight: 600;
     text-align: center;
     margin: auto;
+    color: #9a9a9a;
 
 }
 
@@ -33,13 +37,14 @@ form {
 }
 
 button {
+    text-align: center;
     display: flex;
     width: 100px;
     margin: auto;
     margin-top: 30px;
     margin-bottom: 30px;
     background-color: #ef8157;
-    text-align: center;
+    
 }
 
 label {
