@@ -14,12 +14,7 @@ import { element } from 'protractor';
   styleUrls: ['./examination.component.css']
 })
 
-
-
 export class IconsComponent implements OnInit{
-
-    
-   
 
     @Input()
     inId: number;
@@ -32,8 +27,6 @@ export class IconsComponent implements OnInit{
         quizSet: []
     }
 
-   
-
     errorMessage = '';
     isChecked = false;
     isSubmitted = false;
@@ -44,8 +37,6 @@ export class IconsComponent implements OnInit{
     counter: number = 0;
     timeLeft: number;
     interval;
-
-    
 
     constructor(private examService: ExamService, private router: Router
                 ,private activateRoute: ActivatedRoute, private fb: FormBuilder ,
@@ -64,13 +55,11 @@ export class IconsComponent implements OnInit{
             if(this.counter == this.timeLeft) {
                 this.submit();
                 clearInterval(this.interval);
-            }    
-        });
-
+            }
+        }
+        );
         // if(this.inId > 0) this.examService.getById(this.inId).subscribe(res => this.currentExam = res);
         this.userAnswers = this.fb.group({})
-        
-        
     }
 
     submit() {
@@ -105,7 +94,7 @@ export class IconsComponent implements OnInit{
         // this.currentExam.quizSet.forEach(element => {
         //     examRecord.recordAnswer.push(element.take_answer);
         // });
-        
+
         // this.recordService.createRecord(examRecord).subscribe(
         //     res => {
         //         console.log(res);
@@ -122,20 +111,19 @@ export class IconsComponent implements OnInit{
         //         this.isSubmitted = false;
         //     }
         // )
-        
+
     }
 
     cancel() {
         clearInterval(this.interval);
         this.router.navigateByUrl('');
-        
+
     }
 
     selectAnswers(answer_id, quiz) {
         quiz.take_answer = answer_id;
         console.log(this.currentExam);
     }
-
     // interval: NodeJS.Timeout;
 
     // pauseTimer() {
@@ -149,18 +137,12 @@ export class IconsComponent implements OnInit{
         }, 1000)
     }
 
-
     convertSeconds(s) {
         let min = Math.floor(s / 60);
         let sec = s % 60;
         return min + ':' + sec;
     }
-
-   
-    
-
-   
 }
 
-  
-    
+
+
