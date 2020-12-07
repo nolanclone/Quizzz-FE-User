@@ -11,7 +11,7 @@ h4 {
 }
 
 form {
-    margin: auto;
+    margin: 0 40px 0 40px;
 }
 
 h5 {
@@ -41,3 +41,8 @@ section {
     color:  #9a9a9a;
 }
 
+.button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 150px;
+}

@@ -6,7 +6,7 @@
           <div *ngFor="let quiz of currentRecord.exam.quizSet; let i = index" >
             <ng-container *ngIf="quiz.type == 1">
               <div >
-                <h5>Question {{ i + 1 }}: {{ quiz.content }}</h5>
+                <h5><span class="question">Question {{ i + 1 }}:</span> {{ quiz.content }}</h5>
                 <section *ngFor="let answer of quiz.answers">
                         <p *ngIf="answer._correct" class="correct-answer">Correct answer is: <span>{{answer.content}}</span></p>
                 </section>
@@ -23,9 +23,10 @@
         <h4 class="header">Your answer detail</h4>
         <form class="form">
           <div >
-            <section *ngFor="let userAnswer of currentRecord.recordAnswers" >
-              <h5>Your answer is:</h5>
-              <p class="user-answer">{{userAnswer.content}}
+            <section *ngFor="let userAnswer of currentRecord.recordAnswers; let i = index" >
+              <h5 class="question">Question {{i + 1}}</h5>
+              <!-- <h5></h5> -->
+              <p class="user-answer"> Your answer is: {{userAnswer.content}}
                 <span *ngIf="userAnswer._correct == true"><svg class="check-emo" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle-fill" fill="green" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
               </svg></span>

@@ -11,7 +11,7 @@ h4 {
 }
 
 .form {
-    margin: auto;
+    margin: 20px 40px 20px 40px;
    padding: 0;
 }
 
@@ -22,9 +22,8 @@ span {
 }
 
 h5 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    color: #9a9a9a;
 }
 
 .user-answer {
@@ -34,6 +33,13 @@ h5 {
 .correct-answer {
     color: green;
 }
+
+.question {
+    font-size: 16px;
+    font-weight: bold;
+    color: #9a9a9a;
+}
+
 
 
 
